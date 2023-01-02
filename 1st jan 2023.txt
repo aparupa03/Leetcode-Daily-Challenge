@@ -1,4 +1,5 @@
 //Word Pattern
+
 class Solution {
 public:
     bool wordPattern(string pattern, string s) {
