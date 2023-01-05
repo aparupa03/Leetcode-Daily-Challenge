@@ -1,0 +1,22 @@
+//Minimum Number of Arrows to Burst Balloons
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        if(points.size() == 0)
+            return 0;
+        sort(points.begin(), points.end());
+        int minarrows = 1;
+        int minnum = points[0][1];
+        for(int i = 1; i < points.size(); i++){
+            if(minnum >= points[i][0]){
+                minnum = min(minnum, points[i][1]);
+                continue;
+            }
+            else{
+                minarrows++;
+                minnum = points[i][1];
+            }
+        }
+        return minarrows;
+    }
+};
