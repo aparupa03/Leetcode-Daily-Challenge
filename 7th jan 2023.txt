@@ -1,0 +1,34 @@
+//Gas Station
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int index = -1;
+        int sum = 0;
+        int flag = -1;
+        for(int i = 0; i < gas.size(); i++){
+            sum += gas[i] - cost[i];
+        }
+        if(sum < 0){
+            return -1;
+        }
+        for(int i = 0; i < gas.size()-1; i++){
+            if(cost[i] > gas[i]){
+                index = -1;
+                flag = -1;
+                continue;
+            }
+            else{
+                flag++;
+            }
+            gas[i+1] = gas[i] - cost[i] + gas[i+1];
+            if(flag == 0){
+                index = i;
+            }
+        }
+        if(index == -1){
+            index = gas.size()-1;
+        }
+        return index;
+    }
+};
