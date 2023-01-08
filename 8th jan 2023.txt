@@ -1,0 +1,31 @@
+//Max Points on a Line
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        if(points.size() == 2) return 2;
+        if(points.size() == 1) return 1;
+        int n = points.size();
+        // slope, no. of points
+        map<float, int> store;
+        float slope;
+        int maxpoint = 2;
+        for(int i = 0; i < n; i++){
+            map<float, int> store;
+            for(int j = i+1; j < n; j++){
+                slope = ((float)(points[j][1]-points[i][1]))/((float)(points[j][0]-points[i][0]));
+                float slope1 = ((float)(points[i][1]-points[j][1]))/((float)(points[i][0]-points[j][0]));
+                slope = max(slope,slope1);
+                if(store.find(slope) != store.end()){
+                    store[slope]++;
+                }
+                else{
+                    store[slope] = 2;
+                }
+            }
+            for(auto i:store){
+                maxpoint = max(maxpoint, i.second);
+            }
+        }
+        return maxpoint;
+    }
+};
