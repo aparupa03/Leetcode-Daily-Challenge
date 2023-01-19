@@ -1,0 +1,31 @@
+//Subarray Sums Divisible by K
+
+class Solution {
+public:
+        int ncombinationtwo(int& n){
+        int nctwo = ((n)*(n-1)/2);
+        return nctwo;
+    }
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int count = 0;
+        int s = nums.size();
+        int prefixsum[s];
+        prefixsum[0] = nums[0];
+        for(int i = 1; i < s; i++){
+            prefixsum[i] = nums[i] + prefixsum[i-1];
+        }
+        map<int,int> m;
+        //(a-b)%k == 0 if a%k == b%k
+        //a=xk + r1, b = yk + r2; (a-b) = (x-y)k + r1-r2
+        for(int i = 0; i < s; i++){
+            // m[prefixsum[i]%k]++; //fails for case:[-1,2,9],k=2;[-5],k=5
+            if(prefixsum[i]<0 && prefixsum[i]%k) m[k - (((-1)*(prefixsum[i]))%k)]++;
+            else m[prefixsum[i]%k]++;
+        }
+        for(auto i : m){
+            if(i.first == 0) count += i.second;
+            if(i.second > 1) count += (ncombinationtwo(i.second));
+        }
+        return count;
+    }
+};
