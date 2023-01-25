@@ -1,0 +1,25 @@
+//Find the Town Judge
+class Solution {
+public:
+    int findJudge(int n, vector<vector<int>>& trust) {
+        vector<int> trustedperson(n+1, 0);
+        for(int i = 0; i < trust.size(); i++){
+            trustedperson[trust[i][0]] = 1;
+        }
+        int count = 0;
+        int person;
+        for(int i = 1; i <= n; i++){
+            if(trustedperson[i] == 0){
+                count++;
+                person = i;
+            } 
+        }
+        if(count != 1) return -1;
+        count = 0;
+        for(int i = 0; i < trust.size(); i++){
+            if(trust[i][1] == person) count++;
+        }
+        if(count == n-1) return person;
+        return -1;
+    }
+};
