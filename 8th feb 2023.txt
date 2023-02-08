@@ -1,0 +1,26 @@
+class Solution {
+//Jump Game II
+public:
+    int jump(vector<int>& nums) {
+        int start = 0, end = 0, jumps = 0;
+        int size = nums.size();
+        while(end < size  - 1){
+            start = end + 1;
+            end = min(end + nums[end], size - 1);
+            if(end == size -1){
+                jumps++; 
+                break;
+            }
+            int maximum = -1, index = start;
+            for(int j = start; j <= end; j++){
+                if(nums[j] + j >= maximum){
+                    maximum = nums[j] + j;
+                    index = j;
+                }
+            }
+            jumps++;
+            end = index;
+        }
+        return jumps;
+    }
+};
