@@ -1,0 +1,10 @@
+//Count Odd Numbers in an Interval Range
+class Solution {
+public:
+    int countOdds(int low, int high){
+        int count;
+        if(!(low % 2) && !(high % 2)) count = (high - low)/2;
+        else count = (high - low)/2 + 1;
+        return count;
+    }
+};
