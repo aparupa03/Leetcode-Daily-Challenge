@@ -1,0 +1,44 @@
+//Minimum Distance Between BST Nodes
+class Solution {
+public:
+//Remember : in order traversal sorts bst in ascending order
+
+//Method 1
+    // vector<int> inordernodes;
+    // void inorderTraversal(TreeNode* root) {
+    //     if (root == NULL) {
+    //         return;
+    //     }
+    //     inorderTraversal(root->left);
+    //     inorderNodes.push_back(root->val); // Store the nodes in the list.
+    //     inorderTraversal(root->right);
+    // }
+    // int minDiffInBST(TreeNode* root) {
+    //     inorderTraversal(root);
+    //     int minDistance = INT_MAX;
+    //     for (int i = 1; i < inorderNodes.size(); i++) {
+    //         minDistance = min(minDistance, inorderNodes[i] - inorderNodes[i - 1]);
+    //     }
+    //     return minDistance;  
+    // }
+
+//Method 2
+    int minDistance = INT_MAX;
+    TreeNode* prevValue; // Initially, it will be null.
+    void inorderTraversal(TreeNode* root) {
+        if (root == NULL) {
+            return;
+        }  
+        inorderTraversal(root->left);
+        // Find the difference with the previous value if it is there.
+        if (prevValue != NULL) {
+            minDistance = min(minDistance, root->val - prevValue->val);
+        }
+        prevValue = root;
+        inorderTraversal(root->right);
+    }
+    int minDiffInBST(TreeNode* root) {
+        inorderTraversal(root);
+        return minDistance;
+    }
+};
