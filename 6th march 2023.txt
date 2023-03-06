@@ -1,0 +1,18 @@
+//Kth Missing Positive Number
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        int n = arr.size() + k;
+        vector<int> nums;
+        int index = 0;
+        for(int i = 1; i <= n; i++){
+            if(index == arr.size())
+                nums.push_back(i);
+            else if(index < arr.size() && i != arr[index])
+                nums.push_back(i);
+            else
+                index++;
+        }
+        return nums[k-1];
+    }
+};
