@@ -1,0 +1,26 @@
+//Minimum Time to Complete Trips
+class Solution {
+public:
+    //can buses finish 'totaltrips' in 'giventime'
+    bool finishintime(vector<int>& time, long long giventime, int totalTrips){
+        long long actualTrips = 0;
+        for(auto t : time){
+            actualTrips += giventime/t;
+        }
+        return actualTrips >= totalTrips;
+    }
+
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        long long left = 1LL * *min_element(time.begin(),time.end());
+        long long right = 1LL * *max_element(time.begin(), time.end())*totalTrips;
+
+        while(left < right){
+            long long mid = (left + right)/2;
+            if(finishintime(time,mid,totalTrips))
+                right = mid;
+            else
+                left = mid + 1;
+        }
+        return left;
+    }
+};
