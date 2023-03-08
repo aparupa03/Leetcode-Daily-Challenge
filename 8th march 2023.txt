@@ -1,0 +1,25 @@
+//Koko Eating Bananas
+class Solution {
+public:
+    bool iskperhourenough(vector<int>& piles, int bananasperhour, int h){
+        int totalhourstofinishbananas = 0;
+        for(auto p : piles){
+            if(p < bananasperhour) totalhourstofinishbananas++;
+            else if(p%bananasperhour != 0) totalhourstofinishbananas += (p/bananasperhour + 1);
+            else totalhourstofinishbananas += p/bananasperhour;
+        }
+        return totalhourstofinishbananas <= h;
+    }
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int left = 1;
+        // if left = min_element(piles); wrong output for piles=[10], k=8.
+        int right = *max_element(piles.begin(), piles.end());
+        while(left < right){
+            int mid = (left + right)/2; //mid: bananasperhour
+            if(iskperhourenough(piles, mid, h)) right = mid;
+            else left = mid + 1;
+        }
+        return left;
+    }
+};
