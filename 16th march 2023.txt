@@ -1,0 +1,22 @@
+//Construct Binary Tree from Inorder and Postorder Traversal
+class Solution {
+public:
+    TreeNode* buildTreePostIn(vector<int>& inorder, int instart, int inend, vector<int>& postorder, int poststart, int postend, map<int,int>& indexinInorder){
+        if(poststart > postend || instart > inend) return NULL;
+        TreeNode* root = new TreeNode(postorder[postend]);
+        int rootinInorder = indexinInorder[postorder[postend]];
+        int numsatLeftofRoot = rootinInorder - instart;
+        root->left = buildTreePostIn(inorder, instart, rootinInorder-1, postorder, poststart, poststart+numsatLeftofRoot-1, indexinInorder);
+        root->right = buildTreePostIn(inorder, rootinInorder+1, inend, postorder, poststart+numsatLeftofRoot, postend-1, indexinInorder);
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        map<int, int> indexinInorder;
+        for(int i = 0; i < inorder.size(); i++){
+            indexinInorder[inorder[i]] = i;
+        }
+        int endIndex = inorder.size() - 1;
+        return buildTreePostIn(inorder, 0, endIndex, postorder, 0, endIndex, indexinInorder);
+    }
+};
